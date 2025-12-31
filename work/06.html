@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>我們家的貓咪 - 期末網頁設計專案</title>
+  <!-- 引入 Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    /* 自定義 CSS 調整 */
+    :root {
+      --main-color: #f8bbd0;
+      --secondary-color: #ff80ab;
+    }
+    body {
+      background-color: #fffafb;
+      font-family: "Microsoft JhengHei", sans-serif;
+    }
+    .navbar {
+      background-color: #343a40 !important;
+    }
+    /* 輪播圖圖片高度 */
+    .carousel-item div {
+      height: 400px;
+    }
+    .section-title {
+      border-left: 5px solid var(--main-color);
+      padding-left: 15px;
+      margin-bottom: 30px;
+      margin-top: 50px;
+    }
+    /* 貓咪卡片樣式 */
+    .cat-card {
+      cursor: pointer;
+      transition: 0.3s;
+      border: none;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    }
+    .cat-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+    .cat-card .card-img-top {
+      background-color: #f0f0f0;
+      height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 4rem;
+    }
+    /* 內容區塊隱藏/顯示 */
+    .content-section {
+      display: none;
+    }
+    .active-section {
+      display: block;
+    }
+    footer {
+      background: #343a40;
+      color: white;
+      padding: 30px 0;
+      margin-top: 50px;
+    }
+  </style>
+</head>
+<body>
+
+<!-- 導覽列 -->
+<nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+  <div class="container">
+    <a class="navbar-brand" href="#" onclick="showSection('home')">🐾 貓咪之家</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('home')">首頁</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('about')">貓咪介紹</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('daily')">日常生活</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('gallery')">照片牆</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('contact')">聯絡留言</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- 1. 首頁 (Home) -->
+<section id="home" class="content-section active-section">
+  <div id="catCarousel" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner text-center">
+      <div class="carousel-item active">
+        <div class="d-flex align-items-center justify-content-center bg-secondary text-white">
+          <h1>歡迎來到我們家的貓咪網站</h1>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <div class="d-flex align-items-center justify-content-center bg-info text-white">
+          <h1>紀錄每一刻的純真與可愛</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container mt-5 py-5 text-center">
+    <h2 class="section-title text-start">專案介紹</h2>
+    <p class="lead">這是一個為家中小貓量身打造的網站，整合了所有的生活點滴與基本資料。</p>
+    <button class="btn btn-outline-primary mt-3" onclick="showSection('about')">看看是哪些貓咪？</button>
+  </div>
+</section>
+
+<!-- 2. 貓咪介紹 (About Cat) - 點擊彈窗版 -->
+<section id="about" class="content-section">
+  <div class="container py-5">
+    <h2 class="section-title">貓咪介紹 (點擊卡片看詳細)</h2>
+    <div class="row g-4">
+      <!-- 咪寶卡片 -->
+      <div class="col-md-6 col-lg-3">
+        <div class="card cat-card h-100" onclick="showCatDetail('miba')">
+          <div class="card-img-top">🐱</div>
+          <div class="card-body text-center">
+            <h5 class="card-title">咪寶</h5>
+            <p class="badge bg-primary">活潑好動</p>
+            <p class="card-text">點擊了解更多資訊</p>
+          </div>
+        </div>
+      </div>
+      <!-- 團團卡片 -->
+      <div class="col-md-6 col-lg-3">
+        <div class="card cat-card h-100" onclick="showCatDetail('tuantuan')">
+          <div class="card-img-top">🐨</div>
+          <div class="card-body text-center">
+            <h5 class="card-title">團團</h5>
+            <p class="badge bg-success">安靜嗜睡</p>
+            <p class="card-text">點擊了解更多資訊</p>
+          </div>
+        </div>
+      </div>
+      <!-- 圓圓卡片 -->
+      <div class="col-md-6 col-lg-3">
+        <div class="card cat-card h-100" onclick="showCatDetail('yuanyuan')">
+          <div class="card-img-top">🐼</div>
+          <div class="card-body text-center">
+            <h5 class="card-title">圓圓</h5>
+            <p class="badge bg-warning text-dark">好奇心重</p>
+            <p class="card-text">點擊了解更多資訊</p>
+          </div>
+        </div>
+      </div>
+      <!-- 屁屁卡片 -->
+      <div class="col-md-6 col-lg-3">
+        <div class="card cat-card h-100" onclick="showCatDetail('pipi')">
+          <div class="card-img-top">🍑</div>
+          <div class="card-body text-center">
+            <h5 class="card-title">屁屁</h5>
+            <p class="badge bg-info text-dark">害羞內向</p>
+            <p class="card-text">點擊了解更多資訊</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 3. 日常生活 (Daily Life) -->
+<section id="daily" class="content-section">
+  <div class="container py-5">
+    <h2 class="section-title">日常生活</h2>
+    <div class="row align-items-center mb-5">
+      <div class="col-md-6 text-center py-5 bg-light rounded">🍗 放飯時間</div>
+      <div class="col-md-6 p-4">
+        <h4>07:00 早餐驚魂記</h4>
+        <p>每到早上七點，這群貓咪就會準時在房門口開演唱會，直到給牠們罐罐為止。</p>
+      </div>
+    </div>
+    <div class="row align-items-center flex-md-row-reverse mb-5">
+      <div class="col-md-6 text-center py-5 bg-light rounded">🧶 遊戲時光</div>
+      <div class="col-md-6 p-4">
+        <h4>20:00 逗貓棒大賽</h4>
+        <p>吃完晚餐後的體力發洩時間，咪寶總是跑得最快的那個。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4. 照片牆 (Gallery) -->
+<section id="gallery" class="content-section">
+  <div class="container py-5">
+    <h2 class="section-title">照片牆</h2>
+    <div class="row g-3">
+      <div class="col-6 col-md-4"><div class="bg-secondary text-white py-5 text-center rounded">照片 1</div></div>
+      <div class="col-6 col-md-4"><div class="bg-secondary text-white py-5 text-center rounded">照片 2</div></div>
+      <div class="col-6 col-md-4"><div class="bg-secondary text-white py-5 text-center rounded">照片 3</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 5. 聯絡/留言頁 (Contact) -->
+<section id="contact" class="content-section">
+  <div class="container py-5">
+    <div class="row justify-content-center">
+      <div class="col-md-6 bg-white p-4 shadow rounded">
+        <h2 class="text-center mb-4">留言區</h2>
+        <form id="contactForm">
+          <div class="mb-3">
+            <label class="form-label">您的姓名</label>
+            <input type="text" id="userName" class="form-control">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">留言內容</label>
+            <textarea id="userMsg" class="form-control" rows="3"></textarea>
+          </div>
+          <button type="button" class="btn btn-primary w-100" onclick="validateForm()">送出</button>
+        </form>
+        <div id="formResult" class="mt-3 text-center"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 頁尾 -->
+<footer class="text-center mt-5">
+  <p>© 2023 貓咪家族 - 期末專案作品</p>
+</footer>
+
+<!-- 貓咪詳細資訊 Modal -->
+<div class="modal fade" id="catDetailModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content border-0 shadow">
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title" id="detailTitle">貓咪姓名</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body text-center">
+        <div id="detailIcon" style="font-size: 5rem;" class="mb-3"></div>
+        <div id="detailContent" class="text-start p-3 bg-light rounded">
+          <!-- JS 會填入資訊 -->
+        </div>
+      </div>
+      <div class="modal-footer border-0">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 引入 JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  // 貓咪資料物件 (讓 JS 可以讀取)
+  const catData = {
+    'miba': {
+      name: '咪寶',
+      icon: '🐱',
+      info: '<strong>品種：</strong>米克斯<br><strong>年齡：</strong>2歲<br><strong>個性：</strong>他是家裡的活力來源，最愛玩乒乓球，也很喜歡鑽到被窩裡跟主人一起睡覺。'
+    },
+    'tuantuan': {
+      name: '團團',
+      icon: '🐨',
+      info: '<strong>品種：</strong>英國短毛貓<br><strong>年齡：</strong>3歲<br><strong>個性：</strong>個性非常穩重，最大的愛好就是發呆和睡覺，即使地震也叫不醒他。'
+    },
+    'yuanyuan': {
+      name: '圓圓',
+      icon: '🐼',
+      info: '<strong>品種：</strong>布偶貓<br><strong>年齡：</strong>1歲<br><strong>個性：</strong>眼睛圓滾滾的所以叫圓圓。對所有新事物都有興趣，特別是塑膠袋的聲音。'
+    },
+    'pipi': {
+      name: '屁屁',
+      icon: '🍑',
+      info: '<strong>品種：</strong>米克斯<br><strong>年齡：</strong>4歲<br><strong>個性：</strong>他是貓界的小公主，雖然有點膽小，但一旦認可你，就會每天對你翻肚肚。'
+    }
+  };
+
+  // 1. 顯示貓咪詳細資訊的函數
+  function showCatDetail(catId) {
+    const data = catData[catId];
+    document.getElementById('detailTitle').innerText = data.name;
+    document.getElementById('detailIcon').innerText = data.icon;
+    document.getElementById('detailContent').innerHTML = data.info;
+    
+    // 顯示 Modal
+    const myModal = new bootstrap.Modal(document.getElementById('catDetailModal'));
+    myModal.show();
+  }
+
+  // 2. 切換頁面顯示
+  function showSection(id) {
+    document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active-section'));
+    document.getElementById(id).classList.add('active-section');
+    window.scrollTo(0, 0);
+  }
+
+  // 3. 表單驗證
+  function validateForm() {
+    const name = document.getElementById('userName').value;
+    const msg = document.getElementById('userMsg').value;
+    const res = document.getElementById('formResult');
+    if(!name || !msg) {
+      res.className = "mt-3 text-danger";
+      res.innerText = "請完整填寫姓名與留言！";
+    } else {
+      res.className = "mt-3 text-success";
+      res.innerText = "成功送出！謝謝 " + name;
+      document.getElementById('contactForm').reset();
+    }
+  }
+</script>
+
+</body>
+</html>
+
+
