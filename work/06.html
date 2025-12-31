@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🐾 我們家的貓咪 - 可愛貓貓風格</title>
+  <!-- 引入 Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- 引入 Google Fonts: 可愛的圓體 -->
+  <link href="https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --paw-pink: #ffc1cc;      /* 肉墊粉 */
+      --cat-yellow: #fff9e6;    /* 奶油黃 */
+      --cat-brown: #8d6e63;     /* 貓毛棕 */
+      --soft-white: #ffffff;
+    }
+
+    body {
+      background-color: var(--cat-yellow);
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 100 100"><path fill="%23ffc1cc33" d="M30 50c-5 0-9-4-9-9s4-9 9-9 9 4 9 9-4 9-9 9zm40 0c-5 0-9-4-9-9s4-9 9-9 9 4 9 9-4 9-9 9zM50 75c-8 0-15-7-15-15s7-15 15-15 15 7 15 15-7 15-15 15z"/></svg>');
+      font-family: 'Noto Sans TC', sans-serif;
+      color: var(--cat-brown);
+    }
+
+    /* 圓潤的導覽列 */
+    .navbar {
+      background-color: var(--soft-white) !important;
+      box-shadow: 0 4px 15px rgba(255, 193, 204, 0.3);
+      border-radius: 0 0 30px 30px;
+      margin-bottom: 20px;
+    }
+    .navbar-brand, .nav-link {
+      color: var(--cat-brown) !important;
+      font-weight: bold;
+    }
+    .nav-link:hover {
+      color: var(--paw-pink) !important;
+    }
+
+    .page { display: none; }
+    .page.active { display: block; animation: fadeIn 0.5s ease-in; }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* 可愛卡片設計 */
+    .card {
+      border-radius: 25px;
+      border: 3px solid var(--paw-pink);
+      background: var(--soft-white);
+      transition: all 0.3s;
+      overflow: hidden;
+    }
+    .card:hover {
+      transform: rotate(2deg) scale(1.05);
+      box-shadow: 0 10px 20px rgba(255, 193, 204, 0.4);
+    }
+
+    .box {
+      background: var(--soft-white);
+      border-radius: 30px;
+      padding: 30px;
+      border: 4px dashed var(--paw-pink);
+      position: relative;
+    }
+
+    /* 腳印裝飾 */
+    .paw-icon {
+      font-size: 1.5rem;
+      color: var(--paw-pink);
+    }
+
+    /* 輪播圖可愛化 */
+    .carousel {
+      border-radius: 30px;
+      overflow: hidden;
+      border: 5px solid white;
+    }
+    .carousel-item div {
+      height: 350px;
+      font-size: 2rem;
+      font-weight: bold;
+    }
+
+    /* 按鈕樣式 */
+    .btn-cute {
+      background-color: var(--paw-pink);
+      color: white;
+      border-radius: 50px;
+      padding: 10px 30px;
+      border: none;
+      font-weight: bold;
+      box-shadow: 0 4px 0 #e6a1ad;
+    }
+    .btn-cute:hover {
+      background-color: #ffadb9;
+      color: white;
+      transform: translateY(2px);
+      box-shadow: 0 2px 0 #e6a1ad;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 40px;
+      font-weight: 900;
+      color: var(--cat-brown);
+    }
+    .section-title::before, .section-title::after {
+      content: '🐾';
+      margin: 0 10px;
+    }
+
+    footer {
+      background-color: var(--paw-pink);
+      color: white;
+      padding: 30px 0;
+      border-radius: 50px 50px 0 0;
+      margin-top: 50px;
+    }
+  </style>
+</head>
+<body>
+
+<!-- 導覽列 -->
+<nav class="navbar navbar-expand-lg sticky-top">
+  <div class="container">
+    <a class="navbar-brand" href="#" onclick="showPage('home')">🐾 貓咪之家計畫</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto text-center">
+        <li class="nav-item"><a class="nav-link" href="#" onclick="showPage('home')">首頁</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" onclick="showPage('about')">貓咪成員</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" onclick="showPage('daily')">日常作息</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" onclick="showPage('gallery')">貓咪相簿</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" onclick="showPage('contact')">給牠留言</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- 1️⃣ 首頁 (Home) -->
+<div id="home" class="page active">
+  <div class="container">
+    <div id="catCarousel" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-inner text-white text-center">
+        <div class="carousel-item active">
+          <div class="d-flex align-items-center justify-content-center" style="background: #ffc1cc;">
+            <div>🐱 歡迎來到我們家的貓咪網站 🐾</div>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <div class="d-flex align-items-center justify-content-center" style="background: #b2ebf2;">
+            <div>💖 紀錄每一刻最可愛的瞬間</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-5 box">
+      <h2 class="section-title">專案目標與解決方式</h2>
+      <div class="row g-4">
+        <div class="col-md-6">
+          <div class="p-3 bg-light rounded-4 h-100">
+            <h5>😿 遇到什麼問題？</h5>
+            <ul>
+              <li>貓咪照片散落在手機各處，很難找。</li>
+              <li>社群平台排版死板，沒辦法自己設計。</li>
+              <li>想讓親友一眼就看出每隻貓咪的個性。</li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="p-3 bg-light rounded-4 h-100">
+            <h5>😺 我們怎麼解決？</h5>
+            <ul>
+              <li>架設專屬網頁，集中所有資料。</li>
+              <li>使用 Bootstrap 5 打造可愛又清晰的介面。</li>
+              <li>設計專屬互動，增加瀏覽的趣味性。</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="text-center mt-4">
+        <button onclick="showPage('about')" class="btn-cute">查看貓咪介紹 🐾</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 2️⃣ 貓咪介紹 (About Cat) -->
+<div id="about" class="page">
+  <div class="container">
+    <h2 class="section-title">認識我們的貓貓成員</h2>
+    <div class="row g-4 text-center">
+      <!-- 咪寶 -->
+      <div class="col-md-3">
+        <div class="card p-4">
+          <div class="display-1 mb-2">🐱</div>
+          <h4>咪寶</h4>
+          <p class="badge bg-danger rounded-pill">黏人精</p>
+          <button onclick="showPage('cat_miba')" class="btn btn-outline-info btn-sm rounded-pill mt-2">點我認識牠</button>
+        </div>
+      </div>
+      <!-- 團團 -->
+      <div class="col-md-3">
+        <div class="card p-4">
+          <div class="display-1 mb-2">🐨</div>
+          <h4>團團</h4>
+          <p class="badge bg-primary rounded-pill">睡覺達人</p>
+          <button onclick="showPage('cat_tuantuan')" class="btn btn-outline-info btn-sm rounded-pill mt-2">點我認識牠</button>
+        </div>
+      </div>
+      <!-- 圓圓 -->
+      <div class="col-md-3">
+        <div class="card p-4">
+          <div class="display-1 mb-2">🐼</div>
+          <h4>圓圓</h4>
+          <p class="badge bg-warning text-dark rounded-pill">小吃貨</p>
+          <button onclick="showPage('cat_yuanyuan')" class="btn btn-outline-info btn-sm rounded-pill mt-2">點我認識牠</button>
+        </div>
+      </div>
+      <!-- 屁屁 -->
+      <div class="col-md-3">
+        <div class="card p-4">
+          <div class="display-1 mb-2">🍑</div>
+          <h4>屁屁</h4>
+          <p class="badge bg-info text-dark rounded-pill">躲貓貓高手</p>
+          <button onclick="showPage('cat_pipi')" class="btn btn-outline-info btn-sm rounded-pill mt-2">點我認識牠</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 貓咪專屬子頁面（帶入跳轉功能） -->
+<div id="cat_miba" class="page">
+  <div class="container">
+    <div class="box text-center shadow-lg">
+      <div class="display-1">🐱</div>
+      <h2 class="mt-3">我是咪寶 🐾</h2>
+      <p class="lead">活潑好動，是家裡最愛玩的貓咪。雖然偶爾會搗蛋，但撒嬌起來沒人受得了！</p>
+      <div class="row justify-content-center my-4">
+        <div class="col-auto bg-light p-3 rounded-pill border border-info">
+          📅 年齡：2 歲 | 🧶 愛好：追逗貓棒
+        </div>
+      </div>
+      <button onclick="showPage('cat_tuantuan')" class="btn-cute">下一隻：團團 →</button>
+    </div>
+  </div>
+</div>
+
+<div id="cat_tuantuan" class="page">
+  <div class="container">
+    <div class="box text-center shadow-lg">
+      <div class="display-1">🐨</div>
+      <h2 class="mt-3">我是團團 🐾</h2>
+      <p class="lead">優雅的睡覺達人。我的世界裡，除了吃就是睡，還有在陽台曬太陽。</p>
+      <div class="row justify-content-center my-4">
+        <div class="col-auto bg-light p-3 rounded-pill border border-info">
+          📅 年齡：3 歲 | 💤 愛好：在沙發發呆
+        </div>
+      </div>
+      <div class="btn-group">
+        <button onclick="showPage('cat_miba')" class="btn btn-outline-secondary rounded-pill me-2">← 咪寶</button>
+        <button onclick="showPage('cat_yuanyuan')" class="btn-cute">下一隻：圓圓 →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 3️⃣ 日常生活 (Daily Life) -->
+<div id="daily" class="page">
+  <div class="container">
+    <h2 class="section-title">貓咪的一天（超療癒作息）</h2>
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="box">
+          <div class="d-flex align-items-center mb-4">
+            <span class="display-4 me-4">🌅</span>
+            <div>
+              <h5 class="fw-bold">07:00 晨間鬧鐘模式</h5>
+              <p>咪寶會準時踩在主人的臉上，提醒大家：罐罐時間到了！</p>
+            </div>
+          </div>
+          <div class="d-flex align-items-center mb-4">
+            <span class="display-4 me-4">☀️</span>
+            <div>
+              <h5 class="fw-bold">14:00 陽光充電站</h5>
+              <p>全家最安靜的時候，四隻貓咪會在陽台排排站，吸收陽光能量。</p>
+            </div>
+          </div>
+          <div class="d-flex align-items-center">
+            <span class="display-4 me-4">🌙</span>
+            <div>
+              <h5 class="fw-bold">21:00 睡前運動會</h5>
+              <p>這是一天中最瘋狂的時刻，客廳就是牠們的田徑場。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 4️⃣ 照片牆 (Gallery) -->
+<div id="gallery" class="page">
+  <div class="container">
+    <h2 class="section-title">貓咪萌照大賞</h2>
+    <div class="row g-4">
+      <div class="col-md-4 col-6"><div class="card p-5 text-center shadow-sm">📸 咪寶寫真</div></div>
+      <div class="col-md-4 col-6"><div class="card p-5 text-center shadow-sm">📸 團團萌樣</div></div>
+      <div class="col-md-4 col-6"><div class="card p-5 text-center shadow-sm">📸 圓圓吃相</div></div>
+      <div class="col-md-4 col-6"><div class="card p-5 text-center shadow-sm">📸 屁屁躲藏</div></div>
+      <div class="col-md-4 col-6"><div class="card p-5 text-center shadow-sm">📸 貓貓合照</div></div>
+      <div class="col-md-4 col-6"><div class="card p-5 text-center shadow-sm">📸 搗蛋現場</div></div>
+    </div>
+    <div class="text-center mt-5">
+      <p class="text-muted small">點擊照片（未來可擴充 JavaScript 放大效果）</p>
+    </div>
+  </div>
+</div>
+
+<!-- 5️⃣ 聯絡 / 留言頁 (Contact) -->
+<div id="contact" class="page">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="box">
+          <h2 class="text-center mb-4">跟我說說話 💬</h2>
+          <form id="catForm">
+            <div class="mb-3">
+              <label class="form-label fw-bold">你的名字</label>
+              <input type="text" id="uName" class="form-control rounded-pill border-pink" placeholder="怎麼稱呼你呢？">
+            </div>
+            <div class="mb-3">
+              <label class="form-label fw-bold">留言內容</label>
+              <textarea id="uMsg" class="form-control rounded-4 border-pink" rows="4" placeholder="想對哪隻貓咪說悄悄話？"></textarea>
+            </div>
+            <button type="button" class="btn-cute w-100" onclick="checkForm()">送出悄悄話 🐾</button>
+          </form>
+          <div id="msgResult" class="mt-3 text-center"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="text-center">
+  <div class="container">
+    <p class="mb-1">🐾 2023 貓咪之家期末網頁設計專案 🐾</p>
+    <p class="small">學習目標：Bootstrap 5 響應式佈局、JavaScript 互動設計</p>
+  </div>
+</footer>
+
+<!-- 引入 Bootstrap 5 JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+  // 1. 頁面跳轉邏輯
+  function showPage(pageId) {
+    // 隱藏所有
+    const pages = document.querySelectorAll('.page');
+    pages.forEach(p => p.classList.remove('active'));
+    
+    // 顯示目標
+    const target = document.getElementById(pageId);
+    if(target) target.classList.add('active');
+
+    // 自動縮回導覽列
+    const navCollapse = document.getElementById('navbarNav');
+    const bsCollapse = new bootstrap.Collapse(navCollapse, {toggle: false});
+    bsCollapse.hide();
+
+    // 捲動至最上方
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // 2. 留言驗證與顯示
+  function checkForm() {
+    const n = document.getElementById('uName').value.trim();
+    const m = document.getElementById('uMsg').value.trim();
+    const res = document.getElementById('msgResult');
+
+    if (n === "" || m === "") {
+      res.innerHTML = '<div class="alert alert-warning py-2 rounded-pill">哎呀！名字跟內容都要填寫喔 🐾</div>';
+    } else {
+      res.innerHTML = `<div class="alert alert-success py-2 rounded-pill">收到囉！謝謝 ${n} 的留言 💖</div>`;
+      document.getElementById('catForm').reset();
+    }
+  }
+</script>
+
+</body>
+</html>
+
+
