@@ -1,10 +1,52 @@
-<!DOCTYPE html>
-<html>
-    <head>
-  
-    </head>
-    <body> 
-<h1>2411361046
-    HELlO,WORLD!01</h1>
-    </body>
-</html>
+import time
+import random
+from pymobiledevice3.cli.cli_common import Command
+from pymobiledevice3.services.dvt.dvt_secure_channel_proxy import DvtSecureChannelProxy
+
+# ==================== 設定區 ====================
+# 已幫妳設定台中科大附近的經緯度
+START_LAT = 24.1503
+START_LNG = 120.6841
+# ===============================================
+
+print("🚀 正在透過安全通道連線至您的 iPhone...")
+
+try:
+    with DvtSecureChannelProxy() as dvt:
+        # 呼叫 Apple 官方合法的定位測試服務
+        location_simulation = dvt.services['com.apple.dt.simulatelocation']
+        
+        print("✅ 連線成功！Mac 已成功接管 iPhone 定位。")
+        print("👉 請打開手機上的 Pikmin Bloom，按下「開始種花」！")
+        print("💡 提示：想結束時，在 VS Code 終端機按下 Ctrl + C 即可恢復正常定位。")
+        time.sleep(2)
+        
+        current_lat = START_LAT
+        current_lng = START_LNG
+        
+        while True:
+            # 模擬真人散步步伐 (時速約 5-6 km/h)
+            # 0.00004 的變動大約是走 4 公尺，完美符合皮克敏的種花速度
+            lat_offset = random.uniform(-0.00004, 0.00004)
+            lng_offset = random.uniform(-0.00004, 0.00004)
+            
+            current_lat += lat_offset
+            current_lng += lng_offset
+            
+            # 將定位寫入 iPhone
+            location_simulation.set_location(current_lat, current_lng)
+            print(f"👣 皮克敏散步中... 目前位置: ({current_lat:.5f}, {current_lng:.5f})")
+            
+            # 每走一步隨機休息 5 ~ 8 秒，模擬等紅綠燈，防止被遊戲伺服器抓到
+            time.sleep(random.uniform(5.0, 8.0))
+
+except KeyboardInterrupt:
+    print("\n🛑 已停止程式。正在清除虛擬定位...")
+    try:
+        location_simulation.clear_location()
+    except:
+        pass
+    print("✨ iPhone 已恢復真實定位！")
+
+except Exception as e:
+    print(f"❌ 連線失敗。請確認 iPhone 是否有開「開發者模式」，並重新插拔傳輸線。\n錯誤訊息: {e}")
